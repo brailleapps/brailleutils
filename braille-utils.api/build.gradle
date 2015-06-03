@@ -65,7 +65,7 @@ bundle {
     instructions << [
      	//must use file() to resolve against the build.gradle in Eclipse
         "-include": file('bnd.bnd'),
-        "SPI-Provider": "javax.imageio.spi.ServiceRegistry"
+        "SPI-Provider": "javax.imageio.spi.ServiceRegistry",
         "SPI-Consumer": "javax.imageio.spi.ServiceRegistry#lookupProviders(java.lang.Class)",
         'Repository-Revision': "$repositoryRevision"
     ]
