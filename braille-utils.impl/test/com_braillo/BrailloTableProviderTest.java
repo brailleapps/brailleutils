@@ -39,7 +39,7 @@ public class BrailloTableProviderTest {
 	@Test
 	public void testListLength() {
 		//BrailloTableProvider bt = new BrailloTableProvider();
-		assertEquals("Assert that all tables have tests by counting the list length", 4, bt.list().size());
+		assertEquals("Assert that all tables have tests by counting the list length", 5, bt.list().size());
 	}
 	
 	@Test
