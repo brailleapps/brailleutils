@@ -23,11 +23,17 @@ import java.util.Map;
 
 import org.daisy.braille.api.embosser.FileFormat;
 import org.daisy.braille.api.embosser.FileFormatProvider;
+import org.daisy.braille.api.table.TableCatalogService;
+
+import aQute.bnd.annotation.component.Activate;
+import aQute.bnd.annotation.component.Component;
+import aQute.bnd.annotation.component.Reference;
 
 /**
  *
  * @author Bert Frees
  */
+@Component
 public class BrailleEditorsFileFormatProvider implements FileFormatProvider {
 
     public static enum FileType { BRF, BRL, BRA };
@@ -35,13 +41,44 @@ public class BrailleEditorsFileFormatProvider implements FileFormatProvider {
     private final Map<FileType,FileFormat> map;
 
     public BrailleEditorsFileFormatProvider() {
-            map = new HashMap<FileType,FileFormat>();
-            map.put(FileType.BRF, new BrailleEditorsFileFormat("BRF (Braille Formatted)", "Duxbury Braille file",      FileType.BRF));
-            map.put(FileType.BRA, new BrailleEditorsFileFormat("BRA",                     "Spanish Braille file",      FileType.BRA));
-          //map.put(FileType.BRL, new BrailleEditorsFileFormat("BRL",                     "MicroBraille Braille file", FileType.BRL));
+        map = new HashMap<FileType,FileFormat>();
+    }
+
+    @Activate
+    private void init() {
+        map.put(FileType.BRF, new BrailleEditorsFileFormat("BRF (Braille Formatted)",
+                                                           "Duxbury Braille file",
+                                                           FileType.BRF,
+                                                           tableCatalogService));
+        map.put(FileType.BRA, new BrailleEditorsFileFormat("BRA",
+                                                           "Spanish Braille file",
+                                                           FileType.BRA,
+                                                           tableCatalogService));
+        // map.put(FileType.BRL, new BrailleEditorsFileFormat("BRL",
+        //                                                    "MicroBraille Braille file",
+        //                                                    FileType.BRL,
+        //                                                    tableCatalogService));
     }
 
     public Collection<FileFormat> list() {
         return map.values();
     }
+
+    private TableCatalogService tableCatalogService = null;
+
+    @Reference
+    public void setTableCatalog(TableCatalogService service) {
+        this.tableCatalogService = service;
+    }
+
+    public void unsetTableCatalog(TableCatalogService service) {
+        this.tableCatalogService = null;
+    }
+
+    // @Override
+    // public void setCreatedWithSPI() {
+    //     if (tableCatalogService==null) {
+    //         tableCatalogService = SPIHelper.getTableCatalog();
+    //     }
+    // }
 }
