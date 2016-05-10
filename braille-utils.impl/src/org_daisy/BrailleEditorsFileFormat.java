@@ -56,12 +56,9 @@ public class BrailleEditorsFileFormat extends AbstractFactory implements FileFor
     private final boolean duplexEnabled = false;
     private final boolean eightDotsEnabled = false;
 
-    public BrailleEditorsFileFormat(String name, String desc, FileType identifier, TableCatalogService tableCatalog) {
-
-        super(name, desc, identifier);
-
-        type = identifier;
-
+    public BrailleEditorsFileFormat(FileType type, TableCatalogService tableCatalog) {
+        super(type.getDisplayName(), type.getDescription(), type.getIdentifier());
+        this.type = type;
         switch (type) {
             case BRF:
                 supportedTableIds.add("org_daisy.EmbosserTableProvider.TableType.MIT");
